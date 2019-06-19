@@ -1,0 +1,64 @@
+<div *ngIf="libros ?.length > 0; else noBooks">
+  <ul *ngFor="let libro of libros" class="collection">
+    <li class="collection-item">
+      <a href="#" class="secondary-content">
+        <i *ngIf="statusEdicion == false" (click)="editaLibro($event, libro)" class="material-icons">mode-edit</i>
+        <i *ngIf="statusEdicion && librosEdicion.id == libro.id" (click)="limpiaEstatus()" class="material-icons">close</i>
+      </a>
+      <h4><strong>{{ libro.nombre }}</strong></h4>
+      <br>
+      <blockquote>{{ libro.descripcion }}</blockquote>
+      <br>
+      <span class="my_tag amber">
+        <strong>autor:</strong>{{ libro.autor }}
+      </span>
+      <span class="my_tag amber">
+        <strong>fecha:</strong>{{ libro.fecha }}
+      </span>
+      <span class="my_tag amber">
+        <strong>tema:</strong>{{ libro.tema }}
+      </span>
+      <span class="my_tag amber">
+        <strong>Precio:</strong>{{ libro.precio }}
+      </span>
+      <hr>
+      <div *ngIf="statusEdicion && librosEdicion.id == libro.id" class="container-updateLibro">
+        <form (ngSubmit)="onEditarLibro(libro)" class="col s6">
+          <div class="row">
+            <div class="input-field col s6">
+              <input [(ngModel)]="libro.nombre" #nombre="ngModel" type="text" name="nombre" placeholder="Nombre del Libro">
+              <label for="nombre">Nombre</label>
+            </div>
+            <div class="input-field col s6">
+              <input [(ngModel)]="libro.descripcion" #descripcion="ngModel" type="text" name="descripcion" placeholder="Descripción del Libro">
+              <label for="descripcion">Descripcion</label>
+            </div>
+            <div class="input-field col s6">
+              <input [(ngModel)]="libro.autor" #autor="ngModel" type="text" name="autor" placeholder="Autor del Libro">
+              <label for="autor">Autor</label>
+            </div>
+            <div class="input-field col s6">
+              <input [(ngModel)]="libro.precio" #precio="ngModel" type="text" name="precio" placeholder="Precio del Libro">
+              <label for="precio">Precio</label>
+            </div>
+            <div class="input-field col s6">
+              <input [(ngModel)]="libro.tema" #tema="ngModel" type="text" name="tema" placeholder="Tema del Libro">
+              <label for="tema">Tema</label>
+            </div>
+            <button (click)="onEliminaLibro($event, libro)" class="btn grey right">Eliminar
+              <i class="material-icons right">delete_forever</i>
+            </button>
+            <button type="submit" class="btn green">Actualizar
+              <i class="material-icons right">save</i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noBooks>
+<hr>
+<h5>No hay libros disponibles</h5>
+</ng-template>
